@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Created by alx on 4/30/16.
  */
-public class SynchronizedWorker implements Runnable {
+public class SynchronizedWorker implements Runnable, ThreadWorker {
     private String line;
     private HashMap<String, Integer> wordMap;
 

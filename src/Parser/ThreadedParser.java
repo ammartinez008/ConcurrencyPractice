@@ -2,7 +2,7 @@ package Parser;
 
 
 import Util.TextGrabber;
-import Util.Worker;
+import Util.ConcurrentWorker;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,7 +32,7 @@ public class ThreadedParser implements Parser {
 
 
         for(String line: lines) {
-            Worker worker = new Worker(line, wordMap);
+            ConcurrentWorker worker = new ConcurrentWorker(line, wordMap);
             executorService.execute(worker);
         }
 

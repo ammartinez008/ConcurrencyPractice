@@ -5,11 +5,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by alx on 4/29/16.
  */
-public class Worker implements Runnable{
+public class ConcurrentWorker implements Runnable, ThreadWorker {
     private String line;
     private ConcurrentHashMap<String, Integer> wordMap;
 
-    public Worker(String line, ConcurrentHashMap<String,Integer> wordMap) {
+    public ConcurrentWorker(String line, ConcurrentHashMap<String, Integer> wordMap) {
         this.line = line;
         this.wordMap = wordMap;
     }

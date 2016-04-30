@@ -2,7 +2,6 @@ package Parser;
 
 import Util.SynchronizedWorker;
 import Util.TextGrabber;
-import Util.Worker;
 
 import java.util.HashMap;
 import java.util.List;

@@ -17,7 +17,7 @@ public class ThreadedParser implements Parser {
     private ConcurrentHashMap<String, Integer> wordMap;
     private List<String> lines;
     private TextGrabber textGrabber;
-    private static final int NTHREADS = 5;
+    private static final int NTHREADS = 4;
     private final ExecutorService executorService
             = Executors.newFixedThreadPool(NTHREADS);
 

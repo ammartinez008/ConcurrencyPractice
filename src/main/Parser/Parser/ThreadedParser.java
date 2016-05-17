@@ -1,8 +1,8 @@
-package Parser;
+package main.Parser.Parser;
 
 
-import Util.TextGrabber;
-import Util.ConcurrentWorker;
+import main.Parser.Util.TextGrabber;
+import main.Parser.Util.ConcurrentWorker;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;

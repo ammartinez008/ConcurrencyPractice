@@ -1,6 +1,5 @@
-package Util;
+package main.Parser.Util;
 
-import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -1,4 +1,4 @@
-package Parser;
+package main.Parser.Parser;
 
 /**
  * Created by alx on 4/30/16.

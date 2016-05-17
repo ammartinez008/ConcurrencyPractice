@@ -1,4 +1,4 @@
-package Util;
+package main.Parser.Util;
 
 /**
  * Created by alx on 4/30/16.

@@ -1,6 +1,7 @@
-package Util;
+package main.Parser.Util;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by alx on 4/29/16.
@@ -8,10 +9,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConcurrentWorker implements Runnable, ThreadWorker {
     private String line;
     private ConcurrentHashMap<String, Integer> wordMap;
+    private AtomicBoolean interrupted;
 
     public ConcurrentWorker(String line, ConcurrentHashMap<String, Integer> wordMap) {
         this.line = line;
         this.wordMap = wordMap;
+        this.interrupted.set(false);
     }
 
     public void parse() {
@@ -36,6 +39,12 @@ public class ConcurrentWorker implements Runnable, ThreadWorker {
 
     @Override
     public void run() {
-        parse();
+        while(!interrupted.get()) {
+            parse();
+        }
+    }
+
+    public void cancel() {
+        interrupted.set(true);
     }
 }

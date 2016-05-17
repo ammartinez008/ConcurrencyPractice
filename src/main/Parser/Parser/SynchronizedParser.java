@@ -1,13 +1,11 @@
-package Parser;
+package main.Parser.Parser;
 
-import Util.SynchronizedWorker;
-import Util.TextGrabber;
+import main.Parser.Util.SynchronizedWorker;
+import main.Parser.Util.TextGrabber;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by alx on 4/30/16.
@@ -17,26 +15,40 @@ public class SynchronizedParser implements Parser {
     private List<String> lines;
     private TextGrabber textGrabber;
     private static final int NTHREADS = 8;
-    private final ExecutorService executorService
+    private ExecutorService executorService
             = Executors.newFixedThreadPool(NTHREADS);
+    private HashMap<SynchronizedWorker, Future<?>> workers;
 
     public SynchronizedParser() {
         this.textGrabber = new TextGrabber();
-        this.wordMap = new HashMap<String, Integer>();
+        this.wordMap = new HashMap<>();
+        this.workers = new HashMap<>();
     }
+
+
 
     @Override
     public void parse() {
         textGrabber.parseFile();
         lines = textGrabber.getLines();
 
+
         for(String line: lines) {
             SynchronizedWorker worker = new SynchronizedWorker(line, wordMap);
-            executorService.execute(worker);
+            Future<?> future = executorService.submit(worker);
+            workers.put(worker, future);
         }
 
 
         try {
+            for(SynchronizedWorker worker: workers.keySet()) {
+                try {
+                    Future<?> future = workers.get(worker);
+                    future.get();
+                } catch (ExecutionException e) {
+                    worker.cancel();
+                }
+            }
             executorService.shutdown();
             executorService.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
         } catch (InterruptedException e) {

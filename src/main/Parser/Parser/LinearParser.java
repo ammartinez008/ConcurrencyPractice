@@ -1,6 +1,6 @@
-package Parser;
+package main.Parser.Parser;
 
-import Util.TextGrabber;
+import main.Parser.Util.TextGrabber;
 
 import java.util.HashMap;
 import java.util.List;

@@ -6,9 +6,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
-/**
- * Created by alx on 5/16/16.
- */
+/*************************************************
+ * Implenets ThreadPoolExecutor
+ * used by threaded parsers to manage threads
+ * overriden methods provide additional logging
+ * and time analysis of performance
+ ***************************************************/
 public class ParserThreadPool extends ThreadPoolExecutor {
     private final ThreadLocal<Long> startTime = new ThreadLocal<Long>();
     private final Logger log = Logger.getLogger("ParserThreadPool");
@@ -21,12 +24,14 @@ public class ParserThreadPool extends ThreadPoolExecutor {
         timeConsumed.set(0);
     }
 
+
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
         super.beforeExecute(t, r);
         startTime.set(System.nanoTime());
         log.fine(String.format("Thread %s: start %s", t, r));
     }
+
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
@@ -50,6 +55,14 @@ public class ParserThreadPool extends ThreadPoolExecutor {
         } finally {
             super.terminated();
         }
+    }
+
+    public Long getTasks() {
+        return tasks.get();
+    }
+
+    public Long getTime() {
+        return timeConsumed.get();
     }
 
 }

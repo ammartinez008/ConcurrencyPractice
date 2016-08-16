@@ -5,9 +5,13 @@ import main.Parser.Util.TextGrabber;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by alx on 4/24/16.
- */
+/*****************************************************
+ * Linear Parser
+ * Single threaded parser. uses a hashmap
+ * to store are word analysis from the text
+ * This class is mainly used to compare are analysis
+ * time with multi threaded parsers
+ ******************************************************/
 public class LinearParser implements Parser {
     private List<String> lines;
     private TextGrabber textGrabber;

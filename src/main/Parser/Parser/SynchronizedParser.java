@@ -8,9 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.*;
 
-/**
- * Created by alx on 4/30/16.
- */
+/*******************************************************
+ * Uses synchronization methods to parse the given text
+ * implements the Parser interface
+ ********************************************************/
 public class SynchronizedParser implements Parser {
     private static final long MAXTIME = 10;
 
@@ -18,7 +19,7 @@ public class SynchronizedParser implements Parser {
     private List<String> lines;
     private TextGrabber textGrabber;
     private static final int NTHREADS = Runtime.getRuntime().availableProcessors();
-    private ExecutorService executorService;
+    private ParserThreadPool executorService;
     private BlockingQueue<Runnable> queue;
 
     private HashMap<SynchronizedWorker, Future<?>> workers;
@@ -32,19 +33,20 @@ public class SynchronizedParser implements Parser {
     }
 
 
-
-    @Override
+	/**************************************
+     * parses a text using threads that are managed
+     * by an executor service. In this case, we use futures to store
+     * the result of the worker threads
+     ***************************************/
     public void parse() {
         textGrabber.parseFile();
         lines = textGrabber.getLines();
-
 
         for(String line: lines) {
             SynchronizedWorker worker = new SynchronizedWorker(line, wordMap);
             Future<?> future = executorService.submit(worker);
             workers.put(worker, future);
         }
-
 
         try {
             for(SynchronizedWorker worker: workers.keySet()) {
@@ -63,14 +65,23 @@ public class SynchronizedParser implements Parser {
         }
     }
 
-    @Override
+
+    // prints map of the word count
     public void printMap() {
         for(String key: wordMap.keySet()) {
             System.out.println(key + ": " + wordMap.get(key));
         }
     }
 
-    @Override
+    public long getTaskCount() {
+        return executorService.getTaskCount();
+    }
+
+    public long getTime() {
+        return executorService.getTime();
+    }
+
+    //prints key (word), mainly used for parsing
     public void printKey(String key) {
         System.out.println(key + ": " + wordMap.get(key));
     }

@@ -4,9 +4,9 @@ import main.Parser.Parser.Parser;
 import main.Parser.Parser.LinearParser;
 import main.Parser.Parser.SynchronizedParser;
 
-/**
- * Created by alx on 4/24/16.
- */
+/*********************************
+ * Main method. Runs the parser.
+ ********************************/
 public class Scheduler {
 
    private static Parser parser;

@@ -1,5 +1,6 @@
 # Concurrency Practice
 ## Few different implementations of parsing the text of a short story, and keeping track of the count of each word
+### The motivation behind this seperate project is to find out the best, and most suitable way to parse bodies of text, and then add that functionality into the Articles project (see: https://github.com/ammartinez008/articles). 
 
 #### Parser
 - linear: single threaded parser that uses a hashmap to keep track of word count
